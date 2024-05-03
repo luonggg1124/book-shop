@@ -1,3 +1,12 @@
+
+
+
+@php
+
+use App\Models\Category;
+$categories = Category::query()->get();
+
+@endphp
 <div class="grid__column-2">
     <nav class="category">
         <h3 class="category__heading">
@@ -5,17 +14,16 @@
              Danh mục
         </h3>
         <ul class="category-list">
+            {{-- category-item--active --}}
+           @foreach ($categories as $item)
+               
            
-            <li class="category-item category-item--active">
+            <li class="category-item ">
                 <a href="" class="catogery-item__link">
-                    CC
+                    {{ $item->name }}
                 </a>
             </li>
-            <li class="category-item category-item--active">
-                <a href="" class="catogery-item__link">
-                    Miss you
-                </a>
-            </li>
+            @endforeach
          
           
         </ul>

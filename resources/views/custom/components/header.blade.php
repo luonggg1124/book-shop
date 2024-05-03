@@ -1,5 +1,5 @@
 
-    <div class="app">
+   <div class="app">
         <header class="header">
             <div class="grid ">
                 <nav class="header__navbar">
@@ -121,7 +121,7 @@
                             <a href="{{ route('app.login') }}" class="header__navbar-item-link header__navbar-item--strong">Đăng nhập</a>
                         </li>   
                            <li class="header__navbar-item header__navbar-user" >
-                            <img src="" alt="" class="header__navbar-user-img">
+                            <img src="{{ asset('upload/user/anhdep.jpg') }}" alt="" class="header__navbar-user-img">
                             <span class="header__navbar-user-name">Name</span>
                             <div class="header__navbar-user-menu">
                                 <ul class="header__navbar-user-list-item">

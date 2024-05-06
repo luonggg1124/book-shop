@@ -104,7 +104,7 @@
                         </li> -->
                         <li class="header__navbar-item" >
                             <!-- Link của admin -->
-                            <a href="../admin/index.php" class="header__navbar-item-link">
+                            <a href="" class="header__navbar-item-link">
                             <i class="header__navbar-icon fa-solid fa-user-gear"></i>
                                 Quản trị</a>
                         </li>
@@ -120,16 +120,17 @@
                         <li class="header__navbar-item" >
                             <a href="{{ route('app.login') }}" class="header__navbar-item-link header__navbar-item--strong">Đăng nhập</a>
                         </li>   
-                           <li class="header__navbar-item header__navbar-user" >
-                            <img src="{{ asset('upload/user/anhdep.jpg') }}" alt="" class="header__navbar-user-img">
-                            <span class="header__navbar-user-name">Name</span>
+                        @if (Auth::user())
+                        <li class="header__navbar-item header__navbar-user" >
+                            <img src="{{ Auth::user()->image ? asset('upload/user/'.Auth::user()->image) : asset('upload/user/default.jpg') }}" alt="" class="header__navbar-user-img">
+                            <span class="header__navbar-user-name">{{ Auth::user()->name }}</span>
                             <div class="header__navbar-user-menu">
                                 <ul class="header__navbar-user-list-item">
                                     <li class="header__navbar-user-item">
-                                        <a href="">Cập nhật thông tin</a>
+                                        <a href="{{ route('user.profile',Auth::user()->account_name) }}">Cập nhật thông tin</a>
                                     </li>
                                     <li class="header__navbar-user-item">
-                                        <a href="home.php?act=doimatkhau">Cài đặt mật khẩu</a>
+                                        <a href="">Cài đặt mật khẩu</a>
                                     </li>
                                     <li class="header__navbar-user-item">
                                         <a href="home.php?act=donhang">Đơn mua</a>
@@ -139,7 +140,8 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>   
+                        </li>
+                        @endif   
                     </ul>
                 </nav>
                 <!-- Header with search -->
@@ -187,85 +189,8 @@
                     </div>
                     </form>
                     <!-- cart layout -->
-                    <div class="header__cart">
-                        
-                            @if(isset(Auth::user()->id))
-                                @if($ItemGioHang == "" || empty($ItemGioHang))
-                                    <div class="header__cart-wrap">
-                                    <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
-                                    <span class="header__cart-notice">0</span>
-                                    <!-- No cart: header__cart-list--no-cart -->
-                                    <div class="header__cart-list header__cart-list--no-cart">
-                                        <img src="{{ asset('image_app/no_cart.png') }}" alt="" class="header__cart-no-cart-img">
-                                        <span class="header__cart-list-no-cart-msg">Chưa có sản phẩm</span>
-                                        
-                                    </div>
-                                </div>
-                                @else
-                                    
-                                    <div class="header__cart-wrap">
-                                    <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
-                                    <span class="header__cart-notice">3</span>
-                                    <div class="header__cart-list ">
-                                    <img src="{{ asset('image_app/no_cart.png') }}" alt="" class="header__cart-no-cart-img">
-                                    <span class="header__cart-list-no-cart-msg">Chưa có sản phẩm</span>
-                                    <h4 class="header__cart-heading">Sản phẩm đã thêm</h4>
-                                    <ul class="header__cart-list-item">
-                                        <!-- cart item -->
-                                        @foreach($ItemGioHang as $item)
-                                           <li class="header__cart-item">
-                                            <img src="../assets/img_product/" alt="" class="header__cart-img">
-                                            <div class="header__cart-item-info">
-                                                <div class="header__cart-item-head">
-                                                    <h5 class="header__cart-item-name">
-                                                        ten
-                                                    </h5>
-                                                    <div class="header__cart-item-price-wrap">
-                                                        <span class="header__cart-item-price">222đ</span>
-                                                        <span class="header__cart-item-multiply">x</span>
-                                                        <span class="header__cart-item-qnt">2</span>
-                                                    </div>
-                                                   
-                                                </div>
-                                                <div class="header__cart-item-body">
-                                                    <span class="header__cart-item-description">
-                                                        Danh mục :
-                                                    </span>
-                                                    <span class="header__cart-item-delete">
-                                                    <form action="" method="POST">
-                                                        <input type="text" hidden readonly name="sanphamgiohang" value="" id="">
-                                                        
-                                                        <button type="submit" name="deleteSanPhamGioHang" class="header__cart-item-delete-btn">Xóa</button>
-                                                    </form>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        @endforeach
-                                       
-                                    </ul>
-                                    <div class="btn header__cart-sum-money">Tổng tiền : <p class="header__cart-sum-money-text">123đ</p></div>
-                                    <a href="home.php?act=giohang" class="btn btn--primary header__cart-view-cart">Xem giỏ hàng</a>
-                                    </div>
-                                @endif
-                            @else
-                        
-                               <div class="header__cart-wrap">
-                                <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
-                                <span class="header__cart-notice">0</span>
-                                <!-- No cart: header__cart-list--no-cart -->
-                                <div class="header__cart-list header__cart-list--no-cart">
-                                    <img src="{{ asset('image_app/no_cart.png') }}" alt="" class="header__cart-no-cart-img">
-                                    <span class="header__cart-list-no-cart-msg">Chưa có sản phẩm</span>
-                                    
-                                </div>
-                                </div>
-                            @endif
-                        
-                       
-    
-                    </div>
+                    @include('custom.components.cart')
                 </div>
-               </form>
+               
             </div>
         </header>

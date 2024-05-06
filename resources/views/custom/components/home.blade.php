@@ -14,17 +14,17 @@
                     <div class="home-filter">
                         <span class="home-filter__label">Sắp xếp theo</span>
                         <a href="{{ route('book.popular') }}" class="home-filter__btn btn {{ isset($popular) ? 'btn btn--primary' :'' }}">Phổ biến</a>
-                        <a href="home.php" class="home-filter__btn btn ">Mới nhất</a>
+                        <a href="{{ route('book.new') }}" class="home-filter__btn btn  {{ isset($new) ? 'btn btn--primary' :'' }}">Mới nhất</a>
                         <!-- <button class="home-filter__btn btn">Bán chạy</button> -->
                         <div class="select-input">
                             <span class="select-input__label">Giá</span>
                             <i class="select-input__icon fas fa-angle-down"></i>
                             <ul class="select-input__list">
                                 <li class="select-input__item">
-                                    <a href="" class="select-input__link">Giá thấp đến cao</a>
+                                    <a href="{{ route('book.low-to-high-price') }}" class="select-input__link">Giá thấp đến cao</a>
                                 </li>
                                 <li class="select-input__item">
-                                    <a href="" class="select-input__link">Giá cao đến thấp</a>
+                                    <a href="{{ route('book.high-to-low-price') }}" class="select-input__link">Giá cao đến thấp</a>
                                 </li>
                             </ul>
                         </div>
@@ -32,8 +32,8 @@
                     </div>
                     <div class="home-product">
                         <div class="grid__row">
-                            <!-- product column 2-4 phần sản phẩm copy cả grid__column-2-4 -->
-                            @if (count($books) > 1)
+                            
+                            @if (count($books) > 0)
                             @foreach ($books as $book)
                             @php
                                 // just for example 
@@ -80,7 +80,7 @@
                     </div>
                    
                     <ul class="pagination home-product__pagination">
-                        {{ $books->links() }}
+                        {{ $books->links('') }}
                         {{-- <li class="pagination-item">
                             <a href="" class="pagination-item__link">
                                 <i class="pagination-item__icon fas fa-angle-left"></i>

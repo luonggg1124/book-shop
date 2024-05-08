@@ -1338,7 +1338,7 @@ i.home-product-item__like-icon-isset{
 }
 .container__ctsp-comment-user-content{
     padding: 0 15px;
-    font-size: 1rem;
+    font-size: 1.3rem;
     color: var(--text-color);
 }
 .container__ctsp-heading{
@@ -1577,4 +1577,18 @@ background: linear-gradient(90deg, rgba(251,251,251,1) 21%, rgba(60,73,68,1) 61%
     bottom: 1px;
     text-decoration: none;
     color: var(--text-color);
+}
+
+.container__delete-comment{
+    padding-left: 40px;
+    font-size: 1.2rem;
+}
+.container__delete-comment:hover{
+    color: red;
+    
+}
+
+.comment-content{
+    display: block;
+    margin-bottom: 15px;
 }

@@ -1,10 +1,4 @@
 
-@php
-    use Illuminate\Support\Facades\DB;
-    if (empty($books)) {
-        $books = DB::table('books')->join('categories','books.category_id','=','categories.id')->select('books.*','categories.name as category')->paginate(10);
-    }
-@endphp
 <x-app-layout>
     <div class="app__container">
         <div class="grid">
@@ -36,18 +30,23 @@
                             @if (count($books) > 0)
                             @foreach ($books as $book)
                             @php
-                                // just for example 
-                                $percentage = rand(15,70);
-                                $oldPrice = $book->price + ($book->price * ($percentage/100));
+                                $percentage = intval(($book->price - $book->promotional_price)/$book->price*100);
                             @endphp
                             <div class="grid__column-2-4">
-                             <a href="" class="home-product-item">
+                             <a href="{{ route('book.details',['name' => $book->name, 'id' => $book->id]) }}" class="home-product-item">
                                  <div class="home-product-item__img" style="background-image: url('{{ asset('upload/product/sachhay_bachkhoathuvekhoahoc.jpg') }}') ;"></div>
                                  <h4 class="home-product-item__name">{{$book->name}} </h4>
                                  <div class="home-product-item__price">
-                                     <span class="home-product-item__price-old">{{ number_format(intval($oldPrice),0,',','.') }}đ</span>
-                                     <span class="home-product-item__price-current">{{ number_format(intval($book->price),0,',','.') }}đ</span>
+                                @if ($book->price == $book->promotional_price || $book->promotional_price == 0)
+                                    <span class="home-product-item__price-old">{{ number_format(intval($book->price),0,',','.') }}đ</span>
+                                 @else
+                                 
+                                 <span class="home-product-item__price-old">{{ number_format(intval($book->price),0,',','.') }}đ</span>
+                                 <span class="home-product-item__price-current">{{ number_format(intval($book->promotional_price),0,',','.') }}đ</span>
  
+                                 @endif
+                                     
+                                    
                                  </div>
                                  <div class="home-product-item__action">
                                      <span class="home-product-item__like home-product-item__liked">
@@ -61,11 +60,14 @@
                                      <span class="home-product-item__brand">Số Lượng: {{ $book->quantity }} </span>
                                      <span class="home-product-item__origin-name">{{ $book->publisher }}</span>
                                  </div>
-                                 
+                                 @if ($book->price == $book->promotional_price)
+                                     
+                                 @else
                                  <div class="home-product-item__sale-off">
                                      <div class="home-product-item__sale-off-percent">{{ $percentage }}%</div>
                                      <span class="home-product-item__sale-off-label">Giảm</span>
                                  </div>
+                                 @endif
                              </a>
                             </div>
                             

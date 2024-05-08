@@ -19,7 +19,8 @@ class BookFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'price' => rand(10001,100000),
+            'price' => rand(90000,100000),
+            'promotional_price' => rand(0,90000),
             'publisher' => fake()->firstName(),
             'quantity' => rand(10,100),
             'image' => Str::random(10),

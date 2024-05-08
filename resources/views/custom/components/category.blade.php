@@ -14,12 +14,10 @@ $categories = Category::query()->get();
              Danh mục
         </h3>
         <ul class="category-list">
-            {{-- category-item--active --}}
-           @foreach ($categories as $item)
-               
+           @foreach ($categories as $item) 
            
             <li class="category-item ">
-                <a href="" class="catogery-item__link">
+                <a href="{{ route('book.category',$item->name) }}" class="catogery-item__link @if(isset($category_name) && $category_name == $item->name) category-item--active @endif">
                     {{ $item->name }}
                 </a>
             </li>

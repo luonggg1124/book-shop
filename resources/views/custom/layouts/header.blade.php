@@ -102,24 +102,22 @@
                                
                             </div>
                         </li> -->
+                        @if (Auth::user() && Auth::user()->roles == "ADMIN_ROLE")
                         <li class="header__navbar-item" >
                             <!-- Link của admin -->
                             <a href="" class="header__navbar-item-link">
                             <i class="header__navbar-icon fa-solid fa-user-gear"></i>
                                 Quản trị</a>
                         </li>
+                        @endif
+                        
                         
                         <li class="header__navbar-item">
                             <a href="" class="header__navbar-item-link">
                                 <i class="header__navbar-icon fa-solid fa-circle-question"></i>
                                 Trợ giúp</a>
                         </li>
-                           <li class="header__navbar-item " >
-                            <a href="home.php?act=register" class="header__navbar-item-link header__navbar-item--strong header__navbar-item-separate">Đăng ký</a>
-                        </li>
-                        <li class="header__navbar-item" >
-                            <a href="{{ route('app.login') }}" class="header__navbar-item-link header__navbar-item--strong">Đăng nhập</a>
-                        </li>   
+                         
                         @if (Auth::user())
                         <li class="header__navbar-item header__navbar-user" >
                             <img src="{{ Auth::user()->image ? asset('upload/user/'.Auth::user()->image) : asset('upload/user/default.jpg') }}" alt="" class="header__navbar-user-img">
@@ -141,6 +139,13 @@
                                 </ul>
                             </div>
                         </li>
+                        @else
+                        <li class="header__navbar-item " >
+                            <a href="home.php?act=register" class="header__navbar-item-link header__navbar-item--strong header__navbar-item-separate">Đăng ký</a>
+                        </li>
+                        <li class="header__navbar-item" >
+                            <a href="{{ route('app.login') }}" class="header__navbar-item-link header__navbar-item--strong">Đăng nhập</a>
+                        </li>  
                         @endif   
                     </ul>
                 </nav>

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
-            $table->integer('roles')->default('0');
+            $table->string('roles')->default('USER_ROLE');
             $table->string('account_name')->unique();
             $table->string('image')->nullable();
             $table->string('status');

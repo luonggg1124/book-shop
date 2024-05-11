@@ -108,7 +108,7 @@
                 </div>
                 <span class="comment-content"><p class="container__ctsp-comment-user-content">{{ $comment->content }}</p></span>
                 @if (Auth::user() && Auth::user()->id == $comment->user_id)
-                    <a href="" class="container__delete-comment">Xóa</a>
+                    <a href="{{ route('comment.remove',$comment->id) }}" class="container__delete-comment">Xóa</a>
                 @endif
             </li>
               @endforeach

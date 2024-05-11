@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 
 class GuestController extends Controller
 {
@@ -14,6 +16,19 @@ class GuestController extends Controller
                     ->paginate(10);
         return view('custom.components.home',[
             'books' => $books
+        ]);
+    }
+
+    public function search(Request $request){
+        $keyword = $request->query('q');
+        $books = DB::table('books')
+                    ->join('categories','books.category_id','=','categories.id')
+                    ->select('books.*','categories.name as category')
+                    ->where('books.name','LIKE','%'.$keyword.'%')
+                    ->paginate(10);
+                    config(['app.title' => $keyword]);
+        return view('custom.components.home',[
+                'books' => $books
         ]);
     }
 
@@ -106,4 +121,6 @@ class GuestController extends Controller
             'category_name' => $name
         ]);
     }
+
+    
 }

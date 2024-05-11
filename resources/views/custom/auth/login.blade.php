@@ -15,7 +15,10 @@
                             <div class="auth-form__form">
                                 <div class="auth-form__group">
                                     <label class="auth-form__group-label" for="email">Email:</label>
-                                    <input name="email" type="text" placeholder="Nhập email của bạn" class="auth-form__input">
+                                    <input name="email" type="text"
+                                           placeholder="Nhập email của bạn" 
+                                           value="{{ Session::get('last_logged_out_email') ?? '' }}" 
+                                           class="auth-form__input">
                                     <span class="auth-form__form-masage">{{ session('error') ?? session('errorEmail') ?? '' }}</span>
                                 </div>
                                 <div class="auth-form__group">

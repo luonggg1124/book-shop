@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 
 class AuthController extends Controller
@@ -40,5 +41,16 @@ class AuthController extends Controller
             return redirect()->back()->with("errorPassword","Password is not true");
         }
         
+
+    }
+
+    public function logout(){
+        $email = null;
+        if(Auth::check()) {
+            $email = Auth::user()->email;
+        }
+        Session::put('last_logged_out_email', $email);
+            Auth::logout();
+        return redirect('/login');
     }
 }

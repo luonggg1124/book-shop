@@ -134,7 +134,7 @@
                                         <a href="home.php?act=donhang">Đơn mua</a>
                                     </li>
                                     <li class="header__navbar-user-item header__navbar-user-item-separative">
-                                        <a href="home.php?act=logout">Đăng xuất</a>
+                                        <a href="{{ route('app.logout') }}">Đăng xuất</a>
                                     </li>
                                 </ul>
                             </div>
@@ -150,16 +150,16 @@
                     </ul>
                 </nav>
                 <!-- Header with search -->
-               <form action="" method="GET">
+               <form action="{{ route('book.search') }}" method="GET">
                <div class="header-with-search">
                     <div class="header__logo">
                         <a href="{{ route('app.home') }}" class="header__logo-link">
-                            <img class="header__logo-img" src="{{ asset('image_app/Logo_poly.png') }}" alt="">
+                            <img class="header__logo-img" src="{{ asset('image_app/Logo_poly.png') }}" alt="logo">
                         </a>
                     </div>
                     <div class="header__search">
                         <div class="header__search-input-wrap">
-                            <input type="text" name="search" placeholder="Nhập để tìm kiếm sản phẩm" class="header__search-input">
+                            <input type="text" name="q" placeholder="Nhập để tìm kiếm sản phẩm" class="header__search-input">
                             <!-- search history -->
                             <!-- <div class="header__search-history">
                                 <h3 class="header__search-history-heading">Lịch sử tìm kiếm</h3>

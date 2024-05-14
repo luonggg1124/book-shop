@@ -23,16 +23,21 @@ class AuthController extends Controller
         $credentials = $request->all();
         $validator = Validator::make($credentials,
             [
-                "email"=> "required|email",
-                "password"=> "required",
-                "name" => "required|regex:/^[\p{L}\s]+$/u"
+                "email"=> "required|email|max:100",
+                "password"=> "required|string|min:8|max:20",
+                "name" => "required|string|min:5|max:40|regex:/^[\p{L}\s]+$/u"
             ],
             [
-                "email.required" => "Email cannot be blank",
-                'email.email' => 'Invalid Email',
-                'password.required' => 'Password cannot be blank',
+                "email.required" => "Email cannot be blank.",
+                'email.email' => 'Invalid Email.',
+                "email.max" => "EMail is too long!The maximum is 100 characters.",
+                'password.required' => 'Password cannot be blank.',
+                'password.min' => "Password is too short!The minimum is 8 characters.",
+                "password.max" => "Password is too long!The maximum is 20 characters.",
                 'name.required' => 'Name cannot be blank',
-                'name.regex' => 'Invalid Name'
+                'name.regex' => 'Invalid Name',
+                "name.min" => "The name is too short!The minimum is 5 characters.",
+                "name.max" => "The name is too long!The maximum is 40 characters."
             ]
         );
         

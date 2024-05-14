@@ -14,7 +14,7 @@ class GuestController extends Controller
                     ->join('categories','books.category_id','=','categories.id')
                     ->select('books.*','categories.name as category')
                     ->paginate(10);
-        return view('custom.components.home',[
+        return view('custom.pages.home',[
             'books' => $books
         ]);
     }
@@ -27,7 +27,7 @@ class GuestController extends Controller
                     ->where('books.name','LIKE','%'.$keyword.'%')
                     ->paginate(10);
                     config(['app.title' => $keyword]);
-        return view('custom.components.home',[
+        return view('custom.pages.home',[
                 'books' => $books
         ]);
     }
@@ -38,7 +38,7 @@ class GuestController extends Controller
                     ->select('books.*','categories.name as category')
                     ->orderBy('books.view','DESC')->paginate(10);;
        config(['app.title' => 'Phổ biến']);
-       return view('custom.components.home',[
+       return view('custom.pages.home',[
         'books' => $books,
        
         'popular' => true
@@ -52,7 +52,7 @@ class GuestController extends Controller
                     ->orderBy('books.created_at','DESC')
                     ->paginate(10);;
         config(['app.title' => 'Mới nhất']);
-        return view('custom.components.home',[
+        return view('custom.pages.home',[
         'books' => $books,
         'title' => 'Mới nhất',
         'new' => true
@@ -62,7 +62,7 @@ class GuestController extends Controller
     public function low_to_high_price(){
         $books = DB::table('books')->join('categories','books.category_id','=','categories.id')->select('books.*','categories.name as category')->orderBy('books.price','ASC')->paginate(10);;
         config(['app.title' => 'Giá thấp đến cao']);
-        return view('custom.components.home',[
+        return view('custom.pages.home',[
         'books' => $books,
         'title' => 'Mới nhất',
         
@@ -71,7 +71,7 @@ class GuestController extends Controller
     public function high_to_low_price(){
         $books = DB::table('books')->join('categories','books.category_id','=','categories.id')->select('books.*','categories.name as category')->orderBy('books.price','DESC')->paginate(10);;
         config(['app.title' => 'Giá cao đến thấp']);
-        return view('custom.components.home',[
+        return view('custom.pages.home',[
         'books' => $books,
         'title' => 'Mới nhất',
        
@@ -101,7 +101,7 @@ class GuestController extends Controller
                     ->orderBy('books.view','DESC')
                     ->where('categories.id','=', $book->category_id)
                     ->paginate(10);
-        return view('custom.components.book',[
+        return view('custom.pages.book',[
             'book'=> $book,
             'comments' => $comments,
             'top10' => $top10
@@ -116,7 +116,7 @@ class GuestController extends Controller
                     ->where('categories.name','=', $name)
                     ->paginate(10);
         config(['app.title' => $name]);
-        return view('custom.components.home',[
+        return view('custom.pages.home',[
             'books' => $books,        
             'category_name' => $name
         ]);

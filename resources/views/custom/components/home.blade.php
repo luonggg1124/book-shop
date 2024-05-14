@@ -73,7 +73,15 @@
                             
                             @endforeach
                         @else
-                        <div class="flex justify-center"><p class="fs-5 ">There's nothing here</p></div>
+                            <div class="layout__no-result">
+                                <div>
+                                    <p class="no-result__message">There's no results at all</p>
+                                    <div>
+                                        <a href="{{ route('app.home') }}" class="btn">Back to home</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         @endif
                           
                             

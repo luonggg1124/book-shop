@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Str;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -20,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'address',
+        'phone_number'
     ];
 
     /**
@@ -44,4 +48,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->account_name = static::randomCode();
+        });
+    }
+    private static function randomCode()
+    {
+        do {
+            $randomCode = Str::random(10);
+        } while (self::where('account_name', $randomCode)->exists());
+
+        return $randomCode;
+    }
+   
+
 }

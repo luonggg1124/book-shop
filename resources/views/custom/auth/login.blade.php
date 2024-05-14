@@ -10,7 +10,7 @@
                         <div class="auth-form__container">
                             <div class="auth-form__header">
                                 <h3 class="auth__heading">Đăng nhập</h3>
-                                <a href="" style="text-decoration: none;" class="auth-form__switch-btn">Đăng ký</a>
+                                <a href="{{ route('app.register') }}" style="text-decoration: none;" class="auth-form__switch-btn">Đăng ký</a>
                             </div>
                             <div class="auth-form__form">
                                 <div class="auth-form__group">
@@ -19,12 +19,18 @@
                                            placeholder="Nhập email của bạn" 
                                            value="{{ Session::get('last_logged_out_email') ?? '' }}" 
                                            class="auth-form__input">
-                                    <span class="auth-form__form-masage">{{ session('error') ?? session('errorEmail') ?? '' }}</span>
+                                    @error('email')
+                                        <span class="auth-form__form-masage">{{ $message ?? session('errorEmail') ?? '' }}</span>
+                                    @enderror
+                                   
                                 </div>
                                 <div class="auth-form__group">
                                 <label class="auth-form__group-label" for="password">Mật khẩu:</label>
                                     <input name="password" type="password" placeholder="Nhập mật khẩu của bạn" class="auth-form__input">
-                                    <span class="auth-form__form-masage">{{ session('errorPassword') ?? '' }}</span>
+                                @error('password')
+                                    <span class="auth-form__form-masage">{{ $message }}</span>
+                                @enderror
+                                   
                                 </div>
                             </div>
                             <div class="auth-form__aside">

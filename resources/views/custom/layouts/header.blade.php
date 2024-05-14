@@ -1,5 +1,30 @@
 
-   <div class="app">
+@if(session('success'))
+<script>
+ const html = /*html*/ `
+ <div class="modal-message">
+     <div class="message">
+         <p class="message-content"> {{ session('success') }} </p>
+     </div>
+ </div>
+ `;
+ var appContainer = document.querySelector('body');
+ appContainer.insertAdjacentHTML('afterbegin',html)
+ 
+
+
+ const modalMessage = document.querySelector('.modal-message');
+ modalMessage.addEventListener('click',function() {
+     modalMessage.remove();
+ })
+ setTimeout(() => {
+     if (modalMessage) {
+         modalMessage.remove();
+     }
+ }, 3000);
+</script>
+@endif
+<div class="app">
         <header class="header">
             <div class="grid ">
                 <nav class="header__navbar">
@@ -141,7 +166,7 @@
                         </li>
                         @else
                         <li class="header__navbar-item " >
-                            <a href="home.php?act=register" class="header__navbar-item-link header__navbar-item--strong header__navbar-item-separate">Đăng ký</a>
+                            <a href="{{ route('app.register') }}" class="header__navbar-item-link header__navbar-item--strong header__navbar-item-separate">Đăng ký</a>
                         </li>
                         <li class="header__navbar-item" >
                             <a href="{{ route('app.login') }}" class="header__navbar-item-link header__navbar-item--strong">Đăng nhập</a>

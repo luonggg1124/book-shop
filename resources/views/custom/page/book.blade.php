@@ -1,5 +1,7 @@
 <x-app-layout>
-    <div class="app__container ">
+   
+    
+    <div class="app__container " >
         <div class="grid infor-flex" id="inforpd">
            <div class="grid__column-3">
                <div class="infor-product-left">
@@ -33,12 +35,12 @@
                     </div>
                     <div class="infor-product__right-btn">
                           @if (isset(Auth::user()->id))
-                            <a href="" class="infor-product__right-btn-add">
+                            <a href="{{ route('cart.add', $book->id) }}" class="infor-product__right-btn-add" id='btn-cart'>
                                 <i class="fa-solid fa-cart-plus"></i>
                                 Thêm vào giỏ hàng
                                 </a>
                           @else
-                            <a href="" class="infor-product__right-btn-add" style="text-decoration: none;"><i class="fa-solid fa-cart-plus"></i>
+                            <a href="{{ route('app.login') }}" class="infor-product__right-btn-add" id='btn-cart' ><i class="fa-solid fa-cart-plus"></i>
                                 Thêm vào giỏ hàng
                             </a>
                           @endif
@@ -170,4 +172,5 @@
 
         </div>
        </div>
+      
 </x-app-layout>

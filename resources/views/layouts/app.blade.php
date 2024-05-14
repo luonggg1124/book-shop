@@ -21,8 +21,10 @@
                 'resources/js/app.js'])
 
     </head>
-    <body class="">
+    <body >
+        
         @include('custom.layouts.header')
+       
         {{ $slot }}
         @include('custom.layouts.footer')
     </body>

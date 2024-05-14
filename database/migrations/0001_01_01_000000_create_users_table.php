@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('roles')->default('USER_ROLE');
-            $table->string('account_name')->unique();
+            $table->string('account_name',10)->unique();
             $table->string('image')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -48,6 +48,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropUnique(['account_name']);
+            $table->dropColumn('account_name');
+        });
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');

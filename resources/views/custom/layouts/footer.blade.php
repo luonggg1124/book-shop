@@ -1,5 +1,5 @@
 
-    <footer class="footer">
+<footer class="footer">
         <div class="grid grid__footer">
             <div class="grid__row">
                 <div class="grid__column-2-4">
@@ -33,9 +33,12 @@
                 <div class="grid__column-2-4">
                     <h3 class="footer__heading">Danh mục</h3>
                     <ul class="footer-list">
+                        @foreach (\App\Models\Category::query()->get() as $item)
                         <li class="footer-item">
-                            <a href="" class="footer-item__link">Hờ hờ</a>
+                            <a href="{{ route('book.category',['name' => $item->name, 'id' => $item->id]) }}" class="footer-item__link">{{ $item->name }}</a>
                         </li>
+                        @endforeach
+                       
                     </ul>
                 </div>
                 <div class="grid__column-2-4">

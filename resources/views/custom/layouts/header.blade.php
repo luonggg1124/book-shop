@@ -143,7 +143,7 @@
                                 Trợ giúp</a>
                         </li>
                          
-                        @if (Auth::user())
+                        @auth
                         <li class="header__navbar-item header__navbar-user" >
                             <img src="{{ Auth::user()->image ? asset('upload/user/'.Auth::user()->image) : asset('upload/user/default.jpg') }}" alt="" class="header__navbar-user-img">
                             <span class="header__navbar-user-name">{{ Auth::user()->name }}</span>
@@ -153,10 +153,10 @@
                                         <a href="{{ route('user.profile',Auth::user()->account_name) }}">Cập nhật thông tin</a>
                                     </li>
                                     <li class="header__navbar-user-item">
-                                        <a href="">Cài đặt mật khẩu</a>
+                                        <a href="{{ route('profile.password',Auth::user()->account_name) }}">Cài đặt mật khẩu</a>
                                     </li>
                                     <li class="header__navbar-user-item">
-                                        <a href="home.php?act=donhang">Đơn mua</a>
+                                        <a href="{{ route('order.list') }}">Đơn mua</a>
                                     </li>
                                     <li class="header__navbar-user-item header__navbar-user-item-separative">
                                         <a href="{{ route('app.logout') }}">Đăng xuất</a>
@@ -164,14 +164,15 @@
                                 </ul>
                             </div>
                         </li>
-                        @else
+                        @endauth
+                        @guest
                         <li class="header__navbar-item " >
                             <a href="{{ route('app.register') }}" class="header__navbar-item-link header__navbar-item--strong header__navbar-item-separate">Đăng ký</a>
                         </li>
                         <li class="header__navbar-item" >
                             <a href="{{ route('app.login') }}" class="header__navbar-item-link header__navbar-item--strong">Đăng nhập</a>
                         </li>  
-                        @endif   
+                        @endguest 
                     </ul>
                 </nav>
                 <!-- Header with search -->

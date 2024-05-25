@@ -17,10 +17,10 @@
                                     <label class="auth-form__group-label" for="email">Email:</label>
                                     <input name="email" type="text"
                                            placeholder="Nhập email của bạn" 
-                                           value="{{ Session::get('last_logged_out_email') ?? '' }}" 
+                                           value="{{ Session::get('last_logged_out_email') ?? old('email') ?? '' }}" 
                                            class="auth-form__input">
                                     @error('email')
-                                        <span class="auth-form__form-masage">{{ $message ?? session('errorEmail') ?? '' }}</span>
+                                        <span class="auth-form__form-masage">{{ $message  }}</span>
                                     @enderror
                                    
                                 </div>
@@ -40,7 +40,7 @@
                                </div>
                             </div>
                             <div class="auth-form__controls">
-                                <a href="{{ route('app.home') }}" class="btn auth-form__controls-back btn--nomals">TRỞ VỀ</a>
+                                <a href="{{ $url }}" class="btn auth-form__controls-back btn--nomals">TRỞ VỀ</a>
                                 <button  type="submit" class="btn btn--primary">ĐĂNG NHẬP</button>
                             </div>
                         </div>

@@ -35,7 +35,9 @@
                                 <div class="auth-form__group">
                                     <label class="auth-form__group-label" for="phone">Số điện thoại:</label>
                                     <input id="phone" name="phone_number" type="text" placeholder="Nhập số điện thoại của bạn" class="auth-form__input">
-                                    
+                                    @error('phone_number')
+                                        <span class="auth-form__form-masage">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="auth-form__group">
                                     <label class="auth-form__group-label" for="address">Địa chỉ:</label>
@@ -51,7 +53,7 @@
                             </p>
                         </div>
                         <div class="auth-form__controls">
-                            <a href="{{ route('app.home') }}" class="btn auth-form__controls-back btn--nomals">TRỞ VỀ</a>
+                            <a href="{{ $url }}" class="btn auth-form__controls-back btn--nomals">TRỞ VỀ</a>
                             <button type="submit" class="btn btn--primary">ĐĂNG KÝ</button>
                         </div>
                     </div>

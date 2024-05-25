@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->text('address');
-            $table->integer('status');
+            $table->integer('status')->default('0');
+            $table->string('phone_number');
             $table->decimal('total',10,2)->default(0);
             $table->timestamps();
         });

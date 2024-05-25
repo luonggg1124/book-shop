@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('roles')->default('USER_ROLE');
-            $table->string('account_name',10)->unique();
+            $table->string('account_name',20)->unique();
             $table->string('image')->nullable();
             $table->string('status')->nullable();
             $table->rememberToken();

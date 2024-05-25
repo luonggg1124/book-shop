@@ -12,7 +12,7 @@
            </div>
            <div class="grid__column-9">
                <div class="infor-product-right">
-               <form action="" method="POST">
+              
                     @csrf
                     <h3 class="infor-product-right__name">{{ $book->name }}</h3>
                     @if ($book->price == $book->promotional_price || $book->promotional_price == 0)
@@ -34,27 +34,29 @@
                         <span class="infor-product__right-sanphamcosan">{{ $book->quantity }} sản phẩm có sẵn</span>
                     </div>
                     <div class="infor-product__right-btn">
-                          @if (isset(Auth::user()->id))
+                        @auth
                             <a href="{{ route('cart.add', $book->id) }}" class="infor-product__right-btn-add" id='btn-cart'>
                                 <i class="fa-solid fa-cart-plus"></i>
                                 Thêm vào giỏ hàng
                                 </a>
-                          @else
+                        @endauth
+                        @guest
                             <a href="{{ route('app.login') }}" class="infor-product__right-btn-add" id='btn-cart' ><i class="fa-solid fa-cart-plus"></i>
                                 Thêm vào giỏ hàng
                             </a>
-                          @endif
+                        @endguest
                             
                           
-                          @if (isset(Auth::user()->id))
-                            <button type="submit" name="buynow" class="infor-product__right-btn-buy">Mua ngay</button>
-                          @else
+                        @auth
+                            <a href="{{ route('order.one',$book->id) }}" class="infor-product__right-btn-buy">Mua ngay</a>
+                        @endauth
+                        @guest
                             <a href="{{ route('app.login') }}" class="infor-product__right-btn-buy infor-product__right-btn-buy-link">Mua ngay</a>
-                          @endif
+                        @endguest
                          
                            
                            
-                           </form>
+                          
                        </div>
 
                    
@@ -86,11 +88,12 @@
                <form action="{{ route('user.comment',$book->id) }}" class="form__comments" method="POST">
                 @csrf
                    <input class="form__comments-input" name="content" type="text" placeholder="Nhập bình luận" autocomplete="off"  id="">
-                    @if (isset(Auth::user()->id))
+                   @auth
                         <button type="submit" class="btn form__comments-btn">Gửi bình luận</button>
-                    @else
+                    @endauth
+                    @guest
                         <a href="{{ route('app.login') }}"class="btn form__comments-btn">Gửi bình luận</a>
-                    @endif
+                    @endguest
                </form>
            </div>
            <ul class="container__ctsp-list-comments">
@@ -104,7 +107,7 @@
                         <img src="{{ asset('upload/user/default.jpg') }}" alt="" class="container__ctsp-comment-user-image">
                     </div>
                     <div class="container__ctsp-user-name_time">
-                        <p class="container__ctsp-comment-user-name">{{ $comment->user_name }}</p>
+                        <p class="container__ctsp-comment-user-name">{{ Auth::user() && Auth::user()->id == $comment->user_id ? 'You' :$comment->user_name }}</p>
                     <p class="container__ctsp-comment-time">{{ $comment->created_at }}</p>
                     </div>
                 </div>

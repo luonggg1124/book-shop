@@ -12,7 +12,7 @@
     background-color: var(--white-color);
     margin: 10px;
     border-radius: 4px;
-   
+    align-items: center;
     
    
 }
@@ -178,17 +178,16 @@
     font-weight: 500;
 }
 .home-card-order{
-    height: 60px;
-    background-color: var(--white-color);
-   
-    margin-top: 2px;
-    border-top: 1px solid var(--border-color);
-}
-.home-card-order{ 
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 60px;
+    background-color: var(--white-color);
+    
+    margin-top: 2px;
+    border-top: 1px solid var(--border-color);
 }
+
 .home-card-order-trangthai{
    
     width: 250px;
@@ -258,6 +257,10 @@
 .home-card-inp-checkbox{
     margin-left: 40px;
     margin-right: 20px;
+    border-radius: 3px;
+    padding: 8px;
+   
+    
 }
 .home-filter__buyall-control{
     display: flex;
@@ -270,4 +273,9 @@
    align-items: center;
    justify-content: center;
    text-decoration: none;
+}
+
+.btn-delete-cart:hover{
+    color: red;
+    background-color: antiquewhite;
 }

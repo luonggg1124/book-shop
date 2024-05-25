@@ -3,17 +3,21 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Book;
+use App\Models\Comment;
+use App\Repositories\BookRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 
 
 class GuestController extends Controller
 {
+    protected $bookRepository;
+    public function __construct(BookRepositoryInterface $bookRepository){
+        $this->bookRepository = $bookRepository;
+    }
     public function index(){
-        $books = DB::table('books')
-                    ->join('categories','books.category_id','=','categories.id')
-                    ->select('books.*','categories.name as category')
-                    ->paginate(10);
+        $books = $this->bookRepository->paginate(10);            
         return view('custom.pages.home',[
             'books' => $books
         ]);
@@ -21,11 +25,7 @@ class GuestController extends Controller
 
     public function search(Request $request){
         $keyword = $request->query('q');
-        $books = DB::table('books')
-                    ->join('categories','books.category_id','=','categories.id')
-                    ->select('books.*','categories.name as category')
-                    ->where('books.name','LIKE','%'.$keyword.'%')
-                    ->paginate(10);
+        $books = $this->bookRepository->search($keyword);
                     config(['app.title' => $keyword]);
         return view('custom.pages.home',[
                 'books' => $books
@@ -33,10 +33,7 @@ class GuestController extends Controller
     }
 
     public function popular(){
-       $books = DB::table('books')
-                    ->join('categories','books.category_id','=','categories.id')
-                    ->select('books.*','categories.name as category')
-                    ->orderBy('books.view','DESC')->paginate(10);;
+       $books = $this->bookRepository->orderBy('books.view');
        config(['app.title' => 'Phổ biến']);
        return view('custom.pages.home',[
         'books' => $books,
@@ -46,11 +43,7 @@ class GuestController extends Controller
     }
 
     public function new(){
-        $books = DB::table('books')
-                    ->join('categories','books.category_id','=','categories.id')
-                    ->select('books.*','categories.name as category')
-                    ->orderBy('books.created_at','DESC')
-                    ->paginate(10);;
+        $books = $this->bookRepository->newBook();
         config(['app.title' => 'Mới nhất']);
         return view('custom.pages.home',[
         'books' => $books,
@@ -60,7 +53,7 @@ class GuestController extends Controller
     }
 
     public function low_to_high_price(){
-        $books = DB::table('books')->join('categories','books.category_id','=','categories.id')->select('books.*','categories.name as category')->orderBy('books.price','ASC')->paginate(10);;
+        $books = $this->bookRepository->orderBy('books.promotional_price','asc');
         config(['app.title' => 'Giá thấp đến cao']);
         return view('custom.pages.home',[
         'books' => $books,
@@ -69,7 +62,7 @@ class GuestController extends Controller
        ]);
     }
     public function high_to_low_price(){
-        $books = DB::table('books')->join('categories','books.category_id','=','categories.id')->select('books.*','categories.name as category')->orderBy('books.price','DESC')->paginate(10);;
+        $books = $this->bookRepository->orderBy('books.promotional_price');
         config(['app.title' => 'Giá cao đến thấp']);
         return view('custom.pages.home',[
         'books' => $books,
@@ -79,28 +72,16 @@ class GuestController extends Controller
     }
 
     public function details(string $name,int $id){
-        $book = DB::table('books')
-                    ->join('categories','books.category_id','=','categories.id')
-                    ->select('books.*','categories.name as category')
-                    ->where('books.id','=', $id)->first();
-
+        if(isset(auth()->user()->id)){
+            $bookModel = Book::find($id);
+            $bookModel->view = $bookModel->view+1;
+            $bookModel->save();
+        }
+        
+        $book = $this->bookRepository->getOne($id);    
         config(['app.title' => $name.' | '. $book->category]);
-
-        $comments = DB::table('comments')
-                        ->join('users','comments.user_id','=','users.id')
-                        ->select('comments.*','users.name as user_name')
-                        ->where('comments.book_id','=', $id)
-                        ->orderBy('comments.created_at','DESC')
-                        ->paginate(10)
-                        ;
-       
-    
-        $top10 = DB::table('books')
-                    ->join('categories','books.category_id','=','categories.id')
-                    ->select('books.*','categories.name as category')
-                    ->orderBy('books.view','DESC')
-                    ->where('categories.id','=', $book->category_id)
-                    ->paginate(10);
+        $comments = Comment::getComments($id);
+        $top10 = $this->bookRepository->get10($id,$book->category_id);
         return view('custom.pages.book',[
             'book'=> $book,
             'comments' => $comments,
@@ -108,13 +89,8 @@ class GuestController extends Controller
         ]);
     }
 
-    public function books_by_section(string $name){
-        $books = DB::table('books')
-                    ->join('categories','books.category_id','=','categories.id')
-                    ->select('books.*','categories.name as category')
-                    ->orderBy('books.view','DESC')
-                    ->where('categories.name','=', $name)
-                    ->paginate(10);
+    public function books_by_section(string $name,int $id){
+        $books = $this->bookRepository->getBySection($name,$id);
         config(['app.title' => $name]);
         return view('custom.pages.home',[
             'books' => $books,        
